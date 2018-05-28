@@ -1,6 +1,6 @@
 // if (process.argv && process.argv.length < 3) {
 //   let str = process.argv[1].replace(/ /g,'');
-let str = "5 * X^0 + 4 * X^1 + 9.3 * X^2 = 1 * X^0 + 9.3 * X^2 - 1 * X^2".replace(/ /g, '');
+let str = "5 * X^0 + 8 * X^1 = X^2".replace(/ /g, '');
 let coefficients = [];
 let arr = [];
 let reverseOther;
@@ -122,28 +122,39 @@ for (let i = coefficients.length; i >= 0; i--) {
 
 /* <<<<<<<<<<< SOLUTION >>>>>>>>>>>> */
 
-if (polynomialDegree > 2) {
-  console.log(`The polynomial degree is stricly greater than 2, I can't solve.`);
+let results = [];
+
+if (polynomialDegree === 0) {
+  console.log(`There is no indeterminate, nothing to be solved.`)
 } else if (polynomialDegree === 1) {
   console.log(`The solution is:`)
-  // todo Find and console.log the solution
-} else if (polynomialDegree === 0) {
-  console.log(`There is no indeterminate, nothing to be solved`)
+  let [c, b] = coefficients;
+  results.push((c / b) * (-1));
+} else if (polynomialDegree === 2) {
+  let D;
+  let [c, b, a] = coefficients;
+  D = b * b - 4 * a * c;
+  console.log('Discriminant value:', D);
+  console.log('Discriminant square root value:', Math.sqrt(D));
+  if (D === 0) {
+    console.log(`Discriminant is 0, the solution is:`);
+    results.push((b / (2 * a)) * (-1));
+  } else if (D > 0) {
+    console.log(`Discriminant is strictly positive, the two solutions are:`);
+    results.push((b * (-1) - Math.sqrt(D)) / 2 * a, (b * (-1) + Math.sqrt(D)) / 2 * a);
+  } else {
+    console.log(`Discriminant is strictly negative, can't solve.`);
+  }
 } else {
-  // todo Check if it is really positive
-  console.log(`Discriminant is strictly positive, the two solutions are:`);
-  // todo Find and console.log 2 solutions
-}
+  console.log(`The polynomial degree is stricly greater than 2, I can't solve.`);
+} 
+
+results.forEach(result => {
+  console.log(result);
+})
 
 /* <<<<<<<<<<< SOLUTION >>>>>>>>>>>> */
 
-// todo check validity for bonus #1
-
-// console.log("Reduced form: 4 * X^0 + 4 * X^1 - 9.3 * X^2 = 0");
-// console.log("polynomial degree: 2"); // if degree === 3: "The polynomial degree is stricly greater than 2, I can't solve." // todo max degree
-// console.log("Discriminant is strictly positive, the two solutions are:"); // todo D = ?
-// console.log("0.905239"); // todo x1
-// console.log("-0.475131"); // todo x2
 // } else if (process.argv.length === 0) {
 //   console.log("No parameters found in input.");
 // } else {
