@@ -1,7 +1,7 @@
 // if (process.argv && process.argv.length < 3) {
 //   let str = process.argv[1].replace(/ /g,'');
 let str = "5 * X^0 + 4 * X^1 + 9.3 * X^2 = 1 * X^0 + 9.3 * X^2 - 1 * X^2".replace(/ /g, '');
-let polynoms = [];
+let coefficients = [];
 let arr = [];
 let reverseOther;
 
@@ -54,8 +54,8 @@ for (let i = 0; i < arr.length; i++) {
   // console.log('operation:', operation);
   // console.log('');
 
-  if (!polynoms[degree]) {
-    polynoms[degree] = 0; // undefined turn to 0
+  if (!coefficients[degree]) {
+    coefficients[degree] = 0; // undefined turn to 0
   }
 
   if (((operation === '-' || operation === '=') && !reverseOther) || (operation === '+' && reverseOther)) {
@@ -65,17 +65,17 @@ for (let i = 0; i < arr.length; i++) {
     }
   }
 
-  polynoms[degree] += value;
-  // console.log('polynoms', polynoms);
+  coefficients[degree] += value;
+  // console.log('coefficients', coefficients);
   // }
 }
 
 /* <<<<<<<<<<< REDUCED FORM OUTPUT >>>>>>>>>>>> */
 let reducedForm = '';
 
-for (let i = 0; i < polynoms.length; i++) {
+for (let i = 0; i < coefficients.length; i++) {
   let operator = '+';
-  let value = polynoms[i] ? polynoms[i] : 0;
+  let value = coefficients[i] ? coefficients[i] : 0;
 
   operator = (value && value < 0) ? '-' : '+';
   value = value < 0 ? -value : value;
@@ -108,21 +108,34 @@ console.log(`Reduced form: ${reducedForm} = 0`);
 
 /* <<<<<<<<<<< POLYNOMICAL DEGREE >>>>>>>>>>>> */
 
-let polynomicalDegree = 0;
+let polynomialDegree = 0;
 
-for (let i = polynoms.length; i >= 0; i--) {
-  if (polynoms[i] && polynoms[i] !== 0) {
-    polynomicalDegree = i;
-    console.log('Polynomial degree:', polynomicalDegree);
+for (let i = coefficients.length; i >= 0; i--) {
+  if (coefficients[i] && coefficients[i] !== 0) {
+    polynomialDegree = i;
+    console.log('Polynomial degree:', polynomialDegree);
     break;
   }
 }
 
-if (polynomicalDegree > 2) {
+/* <<<<<<<<<<< ENDOF POLYNOMICAL DEGREE >>>>>>>>>>>> */
+
+/* <<<<<<<<<<< SOLUTION >>>>>>>>>>>> */
+
+if (polynomialDegree > 2) {
   console.log(`The polynomial degree is stricly greater than 2, I can't solve.`);
+} else if (polynomialDegree === 1) {
+  console.log(`The solution is:`)
+  // todo Find and console.log the solution
+} else if (polynomialDegree === 0) {
+  console.log(`There is no indeterminate, nothing to be solved`)
+} else {
+  // todo Check if it is really positive
+  console.log(`Discriminant is strictly positive, the two solutions are:`);
+  // todo Find and console.log 2 solutions
 }
 
-/* <<<<<<<<<<< ENDOF POLYNOMICAL DEGREE >>>>>>>>>>>> */
+/* <<<<<<<<<<< SOLUTION >>>>>>>>>>>> */
 
 // todo check validity for bonus #1
 
