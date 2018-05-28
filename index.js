@@ -1,6 +1,6 @@
 // if (process.argv && process.argv.length < 3) {
 //   let str = process.argv[1].replace(/ /g,'');
-let str = "5 * X^0 + 8 * X^1 = X^2".replace(/ /g, '');
+let str = "5.234 = 1".replace(/ /g, '');
 let coefficients = [];
 let arr = [];
 let reverseOther;
@@ -54,8 +54,10 @@ for (let i = 0; i < arr.length; i++) {
   // console.log('operation:', operation);
   // console.log('');
 
-  if (!coefficients[degree]) {
-    coefficients[degree] = 0; // undefined turn to 0
+  for (let i = 0; i <= degree; i++) {
+    if (!coefficients[i]) {
+      coefficients[i] = 0; // undefined turn to 0
+    }
   }
 
   if (((operation === '-' || operation === '=') && !reverseOther) || (operation === '+' && reverseOther)) {
@@ -81,7 +83,7 @@ for (let i = 0; i < coefficients.length; i++) {
   value = value < 0 ? -value : value;
   reducedForm += (reducedForm === '' || value === 0) ? '' : ` ${operator} `;
   if (i === 0) {
-    if (value !== 0) {
+    if (value === 0) {
       reducedForm += value;
     }
   } else if (i === 1) {
