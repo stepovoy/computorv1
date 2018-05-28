@@ -3,9 +3,10 @@
 let str = "5 * X^0 + 4 * X^1 + 9.3 * X^2 = 1 * X^0 + 9.3 * X^2 - 1 * X^2".replace(/ /g, '');
 let polynoms = [];
 let arr = [];
-let moreThanQuadratic;
 let reverseOther;
-let polynomicalDegree = 0;
+
+
+/* <<<<<<<<<<< INPUT AND REDUCEMENT >>>>>>>>>>>> */
 
 str = str.replace(/[-+=]/g, " $&"); // $& means the whole matched string
 arr = str.split(' ');
@@ -14,7 +15,7 @@ arr = str.split(' ');
 
 for (let i = 0; i < arr.length; i++) {
   let element = arr[i];
-  console.log('element', element);
+  // console.log('element', element);
   // if (arr[i][0]) {
   let rest;
   let degree;
@@ -48,16 +49,10 @@ for (let i = 0; i < arr.length; i++) {
   }
   // console.log('rest', element, 'degree', degree);
 
-  console.log('degree:', degree);
-  console.log('value:', value);
-  console.log('operation:', operation);
-  console.log('');
-  // console.log("Reduced form: 4 * X^0 + 4 * X^1 - 9.3 * X^2 = 0");
-
-
-  if (degree > 2) {
-    moreThanQuadratic = true;
-  }
+  // console.log('degree:', degree);
+  // console.log('value:', value);
+  // console.log('operation:', operation);
+  // console.log('');
 
   if (!polynoms[degree]) {
     polynoms[degree] = 0; // undefined turn to 0
@@ -71,11 +66,11 @@ for (let i = 0; i < arr.length; i++) {
   }
 
   polynoms[degree] += value;
-  console.log(polynoms);
+  // console.log('polynoms', polynoms);
   // }
 }
 
-console.log('');
+/* <<<<<<<<<<< REDUCED FORM OUTPUT >>>>>>>>>>>> */
 let reducedForm = '';
 
 for (let i = 0; i < polynoms.length; i++) {
@@ -105,9 +100,29 @@ for (let i = 0; i < polynoms.length; i++) {
 }
 
 reducedForm += reducedForm === '' ? 0 : '';
+/* <<<<<<<<<<< REDUCED FORM OUTPUT >>>>>>>>>>>> */
 
 console.log(`Reduced form: ${reducedForm} = 0`);
-// console.log("Reduced form: 4 * X^0 + 4 * X^1 - 9.3 * X^2 = 0");
+
+/* <<<<<<<<<<< ENDOF INPUT AND REDUCEMENT >>>>>>>>>>>> */
+
+/* <<<<<<<<<<< POLYNOMICAL DEGREE >>>>>>>>>>>> */
+
+let polynomicalDegree = 0;
+
+for (let i = polynoms.length; i >= 0; i--) {
+  if (polynoms[i] && polynoms[i] !== 0) {
+    polynomicalDegree = i;
+    console.log('Polynomial degree:', polynomicalDegree);
+    break;
+  }
+}
+
+if (polynomicalDegree > 2) {
+  console.log(`The polynomial degree is stricly greater than 2, I can't solve.`);
+}
+
+/* <<<<<<<<<<< ENDOF POLYNOMICAL DEGREE >>>>>>>>>>>> */
 
 // todo check validity for bonus #1
 
