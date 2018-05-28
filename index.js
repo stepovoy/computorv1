@@ -5,6 +5,7 @@ let polynoms = [];
 let arr = [];
 let moreThanQuadratic;
 let reverseOther;
+let polynomicalDegree = 0;
 
 str = str.replace(/[-+=]/g, " $&"); // $& means the whole matched string
 arr = str.split(' ');
@@ -75,7 +76,7 @@ for (let i = 0; i < arr.length; i++) {
 }
 
 console.log('');
-let output = '';
+let reducedForm = '';
 
 for (let i = 0; i < polynoms.length; i++) {
   let operator = '+';
@@ -83,29 +84,29 @@ for (let i = 0; i < polynoms.length; i++) {
 
   operator = (value && value < 0) ? '-' : '+';
   value = value < 0 ? -value : value;
-  output += (output === '' || value === 0) ? '' : ` ${operator} `;
+  reducedForm += (reducedForm === '' || value === 0) ? '' : ` ${operator} `;
   if (i === 0) {
     if (value !== 0) {
-      output += value;
+      reducedForm += value;
     }
   } else if (i === 1) {
     if (value === 1) {
-      output += `X`;
+      reducedForm += `X`;
     } else if (value !== 0) {
-      output += `${value} * X`;
+      reducedForm += `${value} * X`;
     }
   } else {
     if (value === 1) {
-      output += `X^${i}`;
+      reducedForm += `X^${i}`;
     } else if (value !== 0) {
-      output += `${value} * X^${i}`;
+      reducedForm += `${value} * X^${i}`;
     }
   }
 }
 
-output += output === '' ? 0 : '';
+reducedForm += reducedForm === '' ? 0 : '';
 
-console.log(`Reduced form: ${output} = 0`);
+console.log(`Reduced form: ${reducedForm} = 0`);
 // console.log("Reduced form: 4 * X^0 + 4 * X^1 - 9.3 * X^2 = 0");
 
 // todo check validity for bonus #1
