@@ -101,6 +101,9 @@ if (process.argv && process.argv.length < 4) {
       if (coefficients[i] && coefficients[i] !== 0) {
         polynomialDegree = i;
         console.log('Polynomial degree:', polynomialDegree);
+        if (polynomialDegree === 0 && coefficients[i] !== 0) {
+          console.log(`By the way, equation is wrong.`)
+        }
         break;
       }
     }
