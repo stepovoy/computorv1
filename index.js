@@ -1,21 +1,18 @@
 if (process.argv && process.argv.length === 3) {
-  let str = process.argv[2].replace(/ /g,'');
-  let coefficients = [];
-  let arr = [];
-  let reverseOther;
-  let polynomialDegree = 0;
+  let obj = {
+    str: process.argv[2].replace(/ /g,''),
+    coefficients: [],
+    arr: [],
+    reverseOther: false,
+    polynomialDegree: 0
+  };
 
-  reduceInput();
-  reduceOutput();
-  findPolynomialDegree();
-  solveEquation();
-
-  function reduceInput() {
-    str = str.replace(/[-+=]/g, " $&"); // $& means the whole matched string
-    arr = str.split(' ');
+  let reduceInput = (obj => {
+    obj.str = obj.str.replace(/[-+=]/g, " $&"); // $& means the whole matched string
+    obj.arr = obj.str.split(' ');
     
-    for (let i = 0; i < arr.length; i++) {
-      let element = arr[i];
+    for (let i = 0; i < obj.arr.length; i++) {
+      let element = obj.arr[i];
       let rest;
       let degree;
       let value;
@@ -46,28 +43,28 @@ if (process.argv && process.argv.length === 3) {
       }
     
       for (let i = 0; i <= degree; i++) {
-        if (!coefficients[i]) {
-          coefficients[i] = 0; // undefined turn to 0
+        if (!obj.coefficients[i]) {
+          obj.coefficients[i] = 0; // undefined turn to 0
         }
       }
     
-      if (((operation === '-' || operation === '=') && !reverseOther) || (operation === '+' && reverseOther)) {
+      if (((operation === '-' || operation === '=') && !obj.reverseOther) || (operation === '+' && obj.reverseOther)) {
         value = -value;
         if (operation === '=') {
-          reverseOther = true;
+          obj.reverseOther = true;
         }
       }
     
-      coefficients[degree] += value;
+      obj.coefficients[degree] += value;
     }
-  };
+  });
 
-  function reduceOutput() {
+  let reduceOutput = (obj => {
     let reducedForm = '';
 
-    for (let i = 0; i < coefficients.length; i++) {
+    for (let i = 0; i < obj.coefficients.length; i++) {
       let operator = '+';
-      let value = coefficients[i] ? coefficients[i] : 0;
+      let value = obj.coefficients[i] ? obj.coefficients[i] : 0;
 
       operator = (value && value < 0) ? '-' : '+';
       value = value < 0 ? -value : value;
@@ -94,33 +91,33 @@ if (process.argv && process.argv.length === 3) {
     reducedForm += reducedForm === '' ? 0 : '';
 
     console.log(`Reduced form: ${reducedForm} = 0`);
-  }
+  });
 
-  function findPolynomialDegree() {
-    for (let i = coefficients.length; i >= 0; i--) {
-      if (coefficients[i] && coefficients[i] !== 0) {
-        polynomialDegree = i;
-        console.log('Polynomial degree:', polynomialDegree);
-        if (polynomialDegree === 0 && coefficients[i] !== 0) {
+  let findPolynomialDegree = (obj => {
+    for (let i = obj.coefficients.length; i >= 0; i--) {
+      if (obj.coefficients[i] && obj.coefficients[i] !== 0) {
+        obj.polynomialDegree = i;
+        console.log('Polynomial degree:', obj.polynomialDegree);
+        if (obj.polynomialDegree === 0 && obj.coefficients[i] !== 0) {
           console.log(`By the way, equation is wrong.`)
         }
         break;
       }
     }
-  }
+  });
 
-  function solveEquation() {
+  let solveEquation = (obj => {
     let results = [];
 
-    if (polynomialDegree === 0) {
+    if (obj.polynomialDegree === 0) {
       console.log(`There is no indeterminate, nothing to be solved.`)
-    } else if (polynomialDegree === 1) {
+    } else if (obj.polynomialDegree === 1) {
       console.log(`The solution is:`)
-      let [c, b] = coefficients;
+      let [c, b] = obj.coefficients;
       results.push((c / b) * (-1));
-    } else if (polynomialDegree === 2) {
+    } else if (obj.polynomialDegree === 2) {
       let D;
-      let [c, b, a] = coefficients;
+      let [c, b, a] = obj.coefficients;
       D = b * b - 4 * a * c;
       console.log('Discriminant value:', D);
       if (D === 0) {
@@ -140,7 +137,12 @@ if (process.argv && process.argv.length === 3) {
     results.forEach(result => {
       console.log(result);
     })
-  }
+  });
+
+  reduceInput(obj);
+  reduceOutput(obj);
+  findPolynomialDegree(obj);
+  solveEquation(obj);
 
 } else if (process.argv.length === 2) {
   console.log("No parameters found in input.");
